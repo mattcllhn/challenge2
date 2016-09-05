@@ -13,51 +13,58 @@ var displayButtons=function(){
     var button= $('<button />',{
       text:studentsArray[i].first_name,
       id:i,
-      click: function(num){
+      click: function(){
         num=this.id;
-        displayStudents(num)
+        console.log('num varible',num);
+        displayStudents(num);
       }//click function
       // display will as the first student
     });
     // console.log(button);
-    $('#outputButton').append(button)
+    $('#outputButton').append(button);
   }//for loop
 
   $('#outputH2').html(studentsArray[0].first_name+' '+studentsArray[0].last_name)
   $('#outputP').html(studentsArray[0].info)
-  $('#prev').on('click',function(num) {
+  // $('#prev').on('click',function(num) {
     //find the index of the object being displayed
     //subtract one from the index
 
-    num=Number(studentsArrayid);
-    console.log(num);
-    displayStudents(num);
-  });//prev button click
-  $('#next').on('click',function(num) {
-    num=this.id++;
-    displayStudents(num);
-  });//next button click
+    // num=Number(studentsArrayid);
+    // console.log(num);
+    // displayStudents(num);
+  // });//prev button click
+  // $('#next').on('click',function(num) {
+  //   num=this.id++;
+  //   displayStudents(num);
+  // });//next button click
 };//displayButtons
 
 var displayStudents = function (index) {
   console.log('in displayStudents');
+  console.log('index',index);
+
     var newHeader= $('<h2 />',{
     text: studentsArray[index].first_name+' '+studentsArray[index].last_name,
     class:studentsArray[index].last_name
-  });
+  });//header object
+  console.log(newHeader);
+
     var newParagraph=$('<p />',{
       text:studentsArray[index].info,
       class:studentsArray[index].last_name
-    });
-    $('#outputH2').fadeOut(300,function(){
-      $('#outputH2').replaceWith(head);
+    });//paragraph object
+    console.log(newParagraph);
+
+      $('#outputH2').fadeOut(300,function(){
+      $('#outputH2').html(newHeader);
       $('#outputH2').fadeIn(300);
-    });
+    });//header
 
-    $('#outputP').html(newParagraph);
-
-
-
+      $('#outputP').fadeOut(300,function(){
+      $('#outputP').html(newParagraph);
+      $('#outputP').fadeIn(300);
+    });//paragraph
 
 };//displayStudents
 
