@@ -15,17 +15,16 @@ var displayButtons=function(){
       id:i,
       click: function(){
         num=this.id;
-        console.log('num varible',num);
         displayStudents(num);
       }//click function
-      // display will as the first student
-    });
-    // console.log(button);
+    });//button object
     $('#outputButton').append(button);
   }//for loop
 
   $('#outputH2').html(studentsArray[0].first_name+' '+studentsArray[0].last_name)
   $('#outputP').html(studentsArray[0].info)
+  $('#displayNumbers').html(1+'/'+studentsArray.length);
+
   // $('#prev').on('click',function(num) {
     //find the index of the object being displayed
     //subtract one from the index
@@ -44,6 +43,7 @@ var displayStudents = function (index) {
   console.log('in displayStudents');
   console.log('index',index);
 
+$('#outputH2')
     var newHeader= $('<h2 />',{
     text: studentsArray[index].first_name+' '+studentsArray[index].last_name,
     class:studentsArray[index].last_name
@@ -64,7 +64,9 @@ var displayStudents = function (index) {
       $('#outputP').fadeOut(300,function(){
       $('#outputP').html(newParagraph);
       $('#outputP').fadeIn(300);
+
     });//paragraph
+    $('#displayNumbers').html((Number(index)+1)+'/'+studentsArray.length);
 
 };//displayStudents
 
