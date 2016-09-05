@@ -1,38 +1,62 @@
 console.log('sourced');
+
 $('document').ready(function(){
   console.log('in docready');
 
 var piJsonUrl=  'http:devjana.net/pi/pi_students.json';
 var studentsArray=[];
+console.log('in local array',studentsArray);
 
-var displayStudents = function () {
-  console.log('in displayStudents');
-  console.log('in local array',studentsArray);
-  $('#outputDiv').textContent="";
+var displayButtons=function(){
+  console.log('in displayButtons');
   for (var i = 0; i < studentsArray.length; i++) {
-    var newHeader= $('<h2 />',{
-    text: studentsArray[i].first_name+' '+studentsArray[i].last_name,
-    class:studentsArray[i].last_name
-  });
-    var newParagraph=$('<p />',{
-      text:studentsArray[i].info,
-      class:studentsArray[i].last_name
-    });
     var button= $('<button />',{
       text:studentsArray[i].first_name,
-      id:studentsArray[i].last_name+'-button',
-      click: function(){console.log('in '+this.id+' click')}
+      id:i,
+      click: function(num){
+        num=this.id;
+        displayStudents(num)
+      }//click function
+      // display will as the first student
     });
-    // newHeader.textContent= studentsArray[i].first_name+' '+studentsArray[i].last_name;
-    newParagraph.textContent= studentsArray[i].info;
-    console.log(button);
-    console.log(newHeader);
-    $()
-    $('#outputDiv').append(newHeader);
-    $('#outputDiv').append(newParagraph);
-    $('#outputDiv').append(button)
-
+    // console.log(button);
+    $('#outputButton').append(button)
   }//for loop
+
+  $('#outputH2').html(studentsArray[0].first_name+' '+studentsArray[0].last_name)
+  $('#outputP').html(studentsArray[0].info)
+  $('#prev').on('click',function(num) {
+    //find the index of the object being displayed
+    //subtract one from the index
+
+    num=Number(studentsArrayid);
+    console.log(num);
+    displayStudents(num);
+  });//prev button click
+  $('#next').on('click',function(num) {
+    num=this.id++;
+    displayStudents(num);
+  });//next button click
+};//displayButtons
+
+var displayStudents = function (index) {
+  console.log('in displayStudents');
+    var newHeader= $('<h2 />',{
+    text: studentsArray[index].first_name+' '+studentsArray[index].last_name,
+    class:studentsArray[index].last_name
+  });
+    var newParagraph=$('<p />',{
+      text:studentsArray[index].info,
+      class:studentsArray[index].last_name
+    });
+    $('#outputH2').fadeOut(300,function(){
+      $('#outputH2').replaceWith(head);
+      $('#outputH2').fadeIn(300);
+    });
+
+    $('#outputP').html(newParagraph);
+
+
 
 
 };//displayStudents
@@ -51,7 +75,7 @@ var getStudents=function(){
           // console.log(data.students[i]);
           studentsArray.push(data.students[i]);
           }//for loop
-          displayStudents();
+          displayButtons();
 
         }//function
       })//ajax
