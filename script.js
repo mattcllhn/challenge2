@@ -5,8 +5,7 @@ $('document').ready(function(){
 
 var piJsonUrl=  'http:devjana.net/pi/pi_students.json';
 var studentsArray=[];
-console.log('in local array',studentsArray);
-
+var num=0;
 var displayButtons=function(){
   console.log('in displayButtons');
   for (var i = 0; i < studentsArray.length; i++) {
@@ -24,37 +23,34 @@ var displayButtons=function(){
   $('#outputH2').html(studentsArray[0].first_name+' '+studentsArray[0].last_name)
   $('#outputP').html(studentsArray[0].info)
   $('#displayNumbers').html(1+'/'+studentsArray.length);
-
-  // $('#prev').on('click',function(num) {
-    //find the index of the object being displayed
-    //subtract one from the index
-
-    // num=Number(studentsArrayid);
-    // console.log(num);
-    // displayStudents(num);
-  // });//prev button click
-  // $('#next').on('click',function(num) {
-  //   num=this.id++;
-  //   displayStudents(num);
-  // });//next button click
+  $('#next').on('click',function(){
+    if(num< 16){
+    num++;
+    displayStudents(num);}
+    else{
+      num=0;
+      displayStudents(num)}});//nextclick event
+  $('#prev').on('click',function(){
+        if(num>= 1){
+          num--;
+          displayStudents(num);}
+          else{
+            num=16;
+            displayStudents(num);
+          }});//prevclick event
 };//displayButtons
 
-var displayStudents = function (index) {
-  console.log('in displayStudents');
-  console.log('index',index);
 
-$('#outputH2')
+var displayStudents = function (index) {
     var newHeader= $('<h2 />',{
     text: studentsArray[index].first_name+' '+studentsArray[index].last_name,
     class:studentsArray[index].last_name
   });//header object
-  console.log(newHeader);
 
     var newParagraph=$('<p />',{
       text:studentsArray[index].info,
       class:studentsArray[index].last_name
     });//paragraph object
-    console.log(newParagraph);
 
       $('#outputH2').fadeOut(300,function(){
       $('#outputH2').html(newHeader);
@@ -70,8 +66,6 @@ $('#outputH2')
 
 };//displayStudents
 
-
-
 var getStudents=function(){
   console.log('in getStudents');
   $.ajax({
@@ -85,19 +79,10 @@ var getStudents=function(){
           studentsArray.push(data.students[i]);
           }//for loop
           displayButtons();
-
         }//function
       })//ajax
     };//getStudents
 
 getStudents();
-
-
-
-
-
-
-
-
 
 });//docready
